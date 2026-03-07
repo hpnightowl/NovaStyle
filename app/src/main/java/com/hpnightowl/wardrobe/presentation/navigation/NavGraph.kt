@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.hpnightowl.wardrobe.presentation.screen.additem.AddItemScreen
+import com.hpnightowl.wardrobe.presentation.screen.home.HomeScreen
 
 @Composable
 fun WardrobeNavGraph(
@@ -21,7 +23,10 @@ fun WardrobeNavGraph(
         modifier = modifier
     ) {
         composable(Route.Home.route) {
-            PlaceholderScreen(title = "Home Screen")
+            HomeScreen(
+                onNavigateToAddItem = { navController.navigate(Route.AddItem.route) },
+                onNavigateToGallery = { navController.navigate(Route.Gallery.route) }
+            )
         }
         
         composable(Route.Gallery.route) {
@@ -29,7 +34,9 @@ fun WardrobeNavGraph(
         }
         
         composable(Route.AddItem.route) {
-            PlaceholderScreen(title = "Add Item Screen")
+            AddItemScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }
