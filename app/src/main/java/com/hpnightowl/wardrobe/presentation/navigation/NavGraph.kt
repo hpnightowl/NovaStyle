@@ -30,7 +30,9 @@ fun WardrobeNavGraph(
         }
         
         composable(Route.Gallery.route) {
-            PlaceholderScreen(title = "Gallery Screen")
+            com.hpnightowl.wardrobe.presentation.screen.gallery.GalleryScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
         
         composable(Route.AddItem.route) {
