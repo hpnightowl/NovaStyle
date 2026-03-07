@@ -5,7 +5,20 @@ package com.hpnightowl.wardrobe.data.remote.dto
 data class OutfitRequestDto(
     val latitude: Double,
     val longitude: Double,
-    val currentWardrobeIds: List<String>
+    val currentWardrobeItems: List<WardrobeItemDto>,
+    val userProfile: UserProfileDto? = null
+)
+
+data class WardrobeItemDto(
+    val id: String,
+    val category: String,
+    val color: String,
+    val style: String
+)
+
+data class UserProfileDto(
+    val skinTone: String,
+    val palette: String
 )
 
 data class OutfitResponseDto(
@@ -15,5 +28,6 @@ data class OutfitResponseDto(
     val shoesId: String,
     val weatherCondition: String,
     val temperatureCelsius: Double,
+    val locationName: String?,
     val aiReasoning: String
 )

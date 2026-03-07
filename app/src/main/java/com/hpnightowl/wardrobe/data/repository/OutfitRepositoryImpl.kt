@@ -7,6 +7,8 @@ import com.hpnightowl.wardrobe.data.remote.dto.OutfitRequestDto
 import com.hpnightowl.wardrobe.domain.model.Outfit
 import com.hpnightowl.wardrobe.domain.model.Weather
 import com.hpnightowl.wardrobe.domain.repository.OutfitRepository
+import com.hpnightowl.wardrobe.domain.repository.UserProfileRepository
+import com.hpnightowl.wardrobe.data.remote.dto.UserProfileDto
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
@@ -16,7 +18,8 @@ import javax.inject.Inject
  */
 class OutfitRepositoryImpl @Inject constructor(
     private val api: AwsOutfitApi,
-    private val itemDao: ItemDao
+    private val itemDao: ItemDao,
+    private val userProfileRepository: UserProfileRepository
 ) : OutfitRepository {
 
     override suspend fun generateOutfitForToday(
@@ -25,11 +28,20 @@ class OutfitRepositoryImpl @Inject constructor(
     ): Result<Outfit> {
         return try {
             val currentItems = itemDao.getAllItems().first().map { it.toDomainModel() }
+            val userProfile = userProfileRepository.getUserProfile().first()
             
             val request = OutfitRequestDto(
                 latitude = latitude,
                 longitude = longitude,
-                currentWardrobeIds = currentItems.map { it.id }
+                currentWardrobeItems = currentItems.map { item ->
+                    com.hpnightowl.wardrobe.data.remote.dto.WardrobeItemDto(
+                        id = item.id,
+                        category = item.category,
+                        color = item.color,
+                        style = item.style
+                    )
+                },
+                userProfile = userProfile?.let { UserProfileDto(it.skinTone, it.palette) }
             )
 
             val response = api.generateOutfitForToday(request)
@@ -42,8 +54,8 @@ class OutfitRepositoryImpl @Inject constructor(
             val bottom = currentItems.find { it.id == response.bottomId }
             val shoes = currentItems.find { it.id == response.shoesId }
 
-            if (top == null || bottom == null || shoes == null) {
-                return Result.failure(Exception("AI suggested an item that doesn't exist locally."))
+            if (top == null && bottom == null && shoes == null) {
+                return Result.failure(Exception("AI failed to suggest any items from the wardrobe."))
             }
 
             val outfit = Outfit(
@@ -53,7 +65,8 @@ class OutfitRepositoryImpl @Inject constructor(
                 shoes = shoes,
                 weatherTarget = Weather(
                     temperatureCelsius = response.temperatureCelsius,
-                    condition = response.weatherCondition
+                    condition = response.weatherCondition,
+                    locationName = response.locationName
                 ),
                 aiReasoning = response.aiReasoning
             )

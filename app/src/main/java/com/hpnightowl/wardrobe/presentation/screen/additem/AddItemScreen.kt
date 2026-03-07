@@ -108,7 +108,7 @@ fun AddItemScreen(
                     state = state,
                     onCategoryChanged = viewModel::onCategoryChanged,
                     onColorChanged = viewModel::onColorChanged,
-                    onSaveClicked = viewModel::saveItem,
+                    onSaveClicked = { viewModel.saveItem(context) },
                     onDiscardClicked = viewModel::discardImage,
                     modifier = Modifier.fillMaxSize()
                 )

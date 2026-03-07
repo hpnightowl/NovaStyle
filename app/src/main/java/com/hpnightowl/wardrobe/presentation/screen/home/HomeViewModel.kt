@@ -12,7 +12,7 @@ class HomeViewModel @Inject constructor(
     private val outfitRepository: OutfitRepository
 ) : BaseViewModel<HomeUiState, HomeEvent>(HomeUiState()) {
 
-    fun generateOutfitForToday(latitude: Double = 0.0, longitude: Double = 0.0) {
+    fun generateOutfitForToday(latitude: Double = 28.6139, longitude: Double = 77.2090) {
         updateState { copy(isLoading = true, errorMessage = null) }
         
         viewModelScope.launch {

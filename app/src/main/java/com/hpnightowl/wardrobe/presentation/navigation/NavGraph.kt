@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.hpnightowl.wardrobe.presentation.screen.additem.AddItemScreen
 import com.hpnightowl.wardrobe.presentation.screen.home.HomeScreen
+import com.hpnightowl.wardrobe.presentation.screen.profile.ProfileScreen
 
 @Composable
 fun WardrobeNavGraph(
@@ -25,7 +26,8 @@ fun WardrobeNavGraph(
         composable(Route.Home.route) {
             HomeScreen(
                 onNavigateToAddItem = { navController.navigate(Route.AddItem.route) },
-                onNavigateToGallery = { navController.navigate(Route.Gallery.route) }
+                onNavigateToGallery = { navController.navigate(Route.Gallery.route) },
+                onNavigateToProfile = { navController.navigate(Route.Profile.route) }
             )
         }
         
@@ -37,6 +39,12 @@ fun WardrobeNavGraph(
         
         composable(Route.AddItem.route) {
             AddItemScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        composable(Route.Profile.route) {
+            ProfileScreen(
                 onNavigateBack = { navController.popBackStack() }
             )
         }

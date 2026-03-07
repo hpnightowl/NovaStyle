@@ -1,3 +1,12 @@
+import java.util.Properties
+
+val properties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    properties.load(localPropertiesFile.inputStream())
+}
+val baseUrl = properties.getProperty("BASE_URL")?.let { "\"$it\"" } ?: "\"https://ld4whzgbah.execute-api.us-east-1.amazonaws.com/default/\""
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -22,6 +31,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        buildConfigField("String", "BASE_URL", baseUrl)
     }
 
     buildTypes {
@@ -39,6 +50,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -86,4 +98,11 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+
+    // Location
+    implementation(libs.play.services.location)
+    implementation(libs.accompanist.permissions)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
 }
