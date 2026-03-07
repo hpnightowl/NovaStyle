@@ -2,6 +2,7 @@ package com.hpnightowl.wardrobe.domain.model
 
 data class WardrobeItem(
     val id: String,
+    val name: String,
     val imageUrl: String,
     val category: String, // e.g., "Top", "Bottom", "Shoes"
     val color: String,

@@ -1,21 +1,19 @@
 package com.hpnightowl.wardrobe.presentation.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.hpnightowl.wardrobe.presentation.screen.additem.AddItemScreen
+import com.hpnightowl.wardrobe.presentation.screen.chat.ChatScreen
+import com.hpnightowl.wardrobe.presentation.screen.gallery.GalleryScreen
 import com.hpnightowl.wardrobe.presentation.screen.home.HomeScreen
 import com.hpnightowl.wardrobe.presentation.screen.profile.ProfileScreen
 
 @Composable
 fun WardrobeNavGraph(
-    navController: NavHostController,
+   navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -25,16 +23,12 @@ fun WardrobeNavGraph(
     ) {
         composable(Route.Home.route) {
             HomeScreen(
-                onNavigateToAddItem = { navController.navigate(Route.AddItem.route) },
-                onNavigateToGallery = { navController.navigate(Route.Gallery.route) },
-                onNavigateToProfile = { navController.navigate(Route.Profile.route) }
+                onNavigateToAddItem = { navController.navigate(Route.AddItem.route) }
             )
         }
         
         composable(Route.Gallery.route) {
-            com.hpnightowl.wardrobe.presentation.screen.gallery.GalleryScreen(
-                onNavigateBack = { navController.popBackStack() }
-            )
+            GalleryScreen()
         }
         
         composable(Route.AddItem.route) {
@@ -44,16 +38,11 @@ fun WardrobeNavGraph(
         }
         
         composable(Route.Profile.route) {
-            ProfileScreen(
-                onNavigateBack = { navController.popBackStack() }
-            )
+            ProfileScreen()
         }
-    }
-}
-
-@Composable
-private fun PlaceholderScreen(title: String) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = title)
+        
+        composable(Route.Chat.route) {
+            ChatScreen()
+        }
     }
 }

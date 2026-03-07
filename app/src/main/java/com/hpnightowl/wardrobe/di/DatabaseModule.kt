@@ -24,7 +24,9 @@ object DatabaseModule {
             context,
             WardrobeDatabase::class.java,
             WardrobeDatabase.DATABASE_NAME
-        ).build()
+        )
+        .addMigrations(WardrobeDatabase.MIGRATION_1_2)
+        .build()
     }
 
     @Provides

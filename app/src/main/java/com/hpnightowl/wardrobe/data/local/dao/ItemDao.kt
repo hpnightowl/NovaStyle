@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.hpnightowl.wardrobe.data.local.entity.WardrobeItemEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -18,4 +19,7 @@ interface ItemDao {
 
     @Delete
     suspend fun deleteItem(item: WardrobeItemEntity)
+
+    @Update
+    suspend fun updateItem(item: WardrobeItemEntity)
 }

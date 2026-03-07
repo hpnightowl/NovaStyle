@@ -56,6 +56,7 @@ class AddItemViewModel @Inject constructor(
                 var finalCategory = currentState.selectedCategory
                 var finalColor = currentState.selectedColor
                 var finalStyle = "Casual"
+                var finalName = "Unknown Item"
                 
                 if (base64 != null) {
                     try {
@@ -64,6 +65,7 @@ class AddItemViewModel @Inject constructor(
                             if (!response.category.isNullOrBlank()) finalCategory = response.category
                             if (!response.color.isNullOrBlank()) finalColor = response.color
                             if (!response.style.isNullOrBlank()) finalStyle = response.style
+                            if (!response.name.isNullOrBlank()) finalName = response.name
                         }
                     } catch (apiError: Exception) {
                         apiError.printStackTrace()
@@ -79,6 +81,7 @@ class AddItemViewModel @Inject constructor(
 
                 val newItem = WardrobeItem(
                     id = UUID.randomUUID().toString(),
+                    name = finalName,
                     imageUrl = currentState.capturedImageUri,
                     category = finalCategory,
                     color = finalColor,

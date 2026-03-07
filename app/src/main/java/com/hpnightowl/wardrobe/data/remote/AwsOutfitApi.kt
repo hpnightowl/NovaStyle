@@ -5,6 +5,8 @@ import com.hpnightowl.wardrobe.data.remote.dto.AnalyzeItemRequestDto
 import com.hpnightowl.wardrobe.data.remote.dto.AnalyzeItemResponseDto
 import com.hpnightowl.wardrobe.data.remote.dto.AnalyzeUserRequestDto
 import com.hpnightowl.wardrobe.data.remote.dto.AnalyzeUserResponseDto
+import com.hpnightowl.wardrobe.data.remote.dto.ChatRequestDto
+import com.hpnightowl.wardrobe.data.remote.dto.ChatResponseDto
 import com.hpnightowl.wardrobe.data.remote.dto.OutfitRequestDto
 import com.hpnightowl.wardrobe.data.remote.dto.OutfitResponseDto
 import retrofit2.http.Body
@@ -19,6 +21,11 @@ interface AwsOutfitApi {
     suspend fun generateOutfitForToday(
         @Body request: OutfitRequestDto
     ): OutfitResponseDto
+
+    @POST("chat")
+    suspend fun sendChat(
+        @Body request: ChatRequestDto
+    ): ChatResponseDto
 
     @POST("analyze-item")
     suspend fun analyzeItem(

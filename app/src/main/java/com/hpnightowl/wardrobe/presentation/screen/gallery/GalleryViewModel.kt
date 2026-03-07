@@ -34,4 +34,16 @@ class GalleryViewModel @Inject constructor(
                 }
         }
     }
+
+    fun deleteItem(item: com.hpnightowl.wardrobe.domain.model.WardrobeItem) {
+        viewModelScope.launch {
+            itemRepository.deleteItem(item)
+        }
+    }
+
+    fun updateItem(item: com.hpnightowl.wardrobe.domain.model.WardrobeItem) {
+        viewModelScope.launch {
+            itemRepository.updateItem(item)
+        }
+    }
 }

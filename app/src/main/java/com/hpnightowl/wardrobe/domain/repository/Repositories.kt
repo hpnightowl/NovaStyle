@@ -1,6 +1,5 @@
 package com.hpnightowl.wardrobe.domain.repository
 
-import com.hpnightowl.wardrobe.domain.model.Outfit
 import com.hpnightowl.wardrobe.domain.model.WardrobeItem
 import kotlinx.coroutines.flow.Flow
 
@@ -20,11 +19,9 @@ interface ItemRepository {
      * Delete an item from the wardrobe.
      */
     suspend fun deleteItem(item: WardrobeItem)
-}
 
-interface OutfitRepository {
     /**
-     * Ask the AI to generate an outfit based on current wardrobe items and location/weather.
+     * Update an existing item in the wardrobe.
      */
-    suspend fun generateOutfitForToday(latitude: Double, longitude: Double): Result<Outfit>
+    suspend fun updateItem(item: WardrobeItem)
 }

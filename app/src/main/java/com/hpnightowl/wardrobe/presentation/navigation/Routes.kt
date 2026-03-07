@@ -8,4 +8,5 @@ sealed class Route(val route: String) {
     object Gallery : Route("gallery")
     object AddItem : Route("add_item")
     object Profile : Route("profile")
+    object Chat : Route("chat")
 }

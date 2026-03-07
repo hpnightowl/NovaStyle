@@ -30,4 +30,8 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun deleteItem(item: WardrobeItem) {
         itemDao.deleteItem(item.toEntity())
     }
+
+    override suspend fun updateItem(item: WardrobeItem) {
+        itemDao.updateItem(item.toEntity())
+    }
 }

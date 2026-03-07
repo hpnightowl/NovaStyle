@@ -8,6 +8,7 @@ import com.hpnightowl.wardrobe.domain.model.WardrobeItem
 data class WardrobeItemEntity(
     @PrimaryKey
     val id: String,
+    val name: String,
     val imageUrl: String,
     val category: String,
     val color: String,
@@ -18,6 +19,7 @@ data class WardrobeItemEntity(
 fun WardrobeItemEntity.toDomainModel(): WardrobeItem {
     return WardrobeItem(
         id = id,
+        name = name,
         imageUrl = imageUrl,
         category = category,
         color = color,
@@ -28,6 +30,7 @@ fun WardrobeItemEntity.toDomainModel(): WardrobeItem {
 fun WardrobeItem.toEntity(): WardrobeItemEntity {
     return WardrobeItemEntity(
         id = id,
+        name = name,
         imageUrl = imageUrl,
         category = category,
         color = color,

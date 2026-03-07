@@ -16,27 +16,37 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hpnightowl.wardrobe.presentation.screen.home.WardrobeItemCard
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.hpnightowl.wardrobe.domain.model.WardrobeItem
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GalleryScreen(
-    onNavigateBack: () -> Unit,
     viewModel: GalleryViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    var itemToEdit by remember { mutableStateOf<WardrobeItem?>(null) }
+
+    if (itemToEdit != null) {
+        EditItemDialog(
+            item = itemToEdit!!,
+            onDismiss = { itemToEdit = null },
+            onSave = { updatedItem ->
+                viewModel.updateItem(updatedItem)
+                itemToEdit = null
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("My Wardrobe") },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
+                title = { Text("My Wardrobe", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface
                 )
             )
         }
@@ -64,7 +74,11 @@ fun GalleryScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(state.items) { item ->
-                        WardrobeItemCard(item = item)
+                        WardrobeItemCard(
+                            item = item,
+                            onEdit = { itemToEdit = item },
+                            onDelete = { viewModel.deleteItem(item) }
+                        )
                     }
                 }
             }
