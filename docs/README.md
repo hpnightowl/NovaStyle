@@ -1,6 +1,6 @@
-# Closet Copilot Live Coding Docs
+# NovaStyle
 
-This folder contains explanations and conceptual deep-dives for the architecture and implementation of the Closet Copilot app. Use this for live coding or deep learning.
+This folder contains explanations and conceptual deep-dives for the architecture
 
 ## Outline
 1. **[01_Architecture_Overview](01_Architecture_Overview.md)** (To be created)
